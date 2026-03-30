@@ -13,6 +13,7 @@ const io = new Server(server, {
       'http://localhost:3000',
       'https://safeguard-app-sigma.vercel.app',
       /\.vercel\.app$/,
+      /\.netlify\.app$/,
     ],
     methods: ['GET', 'POST'],
   },
@@ -23,6 +24,7 @@ app.use(cors({
     'http://localhost:3000',
     'https://safeguard-app-sigma.vercel.app',
     /\.vercel\.app$/,
+    /\.netlify\.app$/,
   ],
 }));
 app.use(express.json());
