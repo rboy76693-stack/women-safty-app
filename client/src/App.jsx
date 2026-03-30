@@ -5,6 +5,7 @@ import Dashboard from './components/Dashboard';
 import ContactsPage from './components/ContactsPage';
 import AlertHistory from './components/AlertHistory';
 import ProfileSetup from './components/ProfileSetup';
+import SOSActiveBanner from './components/SOSActiveBanner';
 import { useLocalStorage } from './hooks/useLocalStorage';
 import { useIsMobile } from './hooks/useIsMobile';
 import { useSOSQueue } from './hooks/useSOSQueue';
@@ -104,6 +105,9 @@ export default function App() {
             </button>
           </div>
         )}
+
+        {/* SOS Active Banner — always visible when SOS is active */}
+        <SOSActiveBanner />
 
         {/* Offline banner */}
         {!online && (

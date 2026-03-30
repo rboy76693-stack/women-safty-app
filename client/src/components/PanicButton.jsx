@@ -9,21 +9,15 @@ const COUNTDOWN    = 3;
 const MIN_CONTACTS = 3;
 
 export default function PanicButton({ userId, userName, contacts = [], onSOSTriggered }) {
-  const [phase, setPhase]     = useState('idle');
+  const [phase, setPhase]     = useState(() => localStorage.getItem('safeguard_active_alert') ? 'active' : 'idle');
   const [count, setCount]     = useState(COUNTDOWN);
   const [error, setError]     = useState(null);
-  // Persist active alert across refreshes
   const [activeAlertId, setActiveAlertId] = useState(() => localStorage.getItem('safeguard_active_alert') || null);
   const [shakeEnabled, setShakeEnabled]   = useState(true);
   const timer  = useRef(null);
   const online = useOnlineStatus();
   const { socket } = useSocket();
   const hasEnoughContacts = contacts.length >= MIN_CONTACTS;
-
-  // If there's a persisted active alert, restore active phase
-  useEffect(() => {
-    if (activeAlertId) setPhase('active');
-  }, []);
 
   // Shake to trigger SOS
   useShakeDetection(() => {
