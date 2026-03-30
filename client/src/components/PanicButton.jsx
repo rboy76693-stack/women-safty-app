@@ -4,6 +4,7 @@ import { useOnlineStatus } from '../hooks/useOnlineStatus';
 import { useShakeDetection } from '../hooks/useShakeDetection';
 import { queueSOS } from '../hooks/useSOSQueue';
 import { useSocket } from '../context/SocketContext';
+import { apiPost } from '../utils/api';
 
 const COUNTDOWN    = 3;
 const MIN_CONTACTS = 3;
@@ -54,10 +55,7 @@ export default function PanicButton({ userId, userName, contacts = [], onSOSTrig
         };
 
         if (online) {
-          const resp = await fetch('/api/sos/trigger', {
-            method: 'POST', headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload),
-          });
+          const resp = await apiPost('/api/sos/trigger', payload);
           const data = await resp.json();
           setActiveAlertId(data.alertId);
           localStorage.setItem('safeguard_active_alert', data.alertId);
@@ -88,7 +86,7 @@ export default function PanicButton({ userId, userName, contacts = [], onSOSTrig
 
   const markSafe = async () => {
     if (activeAlertId && online) {
-      try { await fetch(`/api/sos/resolve/${activeAlertId}`, { method: 'POST' }); } catch { }
+      try { await apiPost(`/api/sos/resolve/${activeAlertId}`, {}); } catch { }
     }
     localStorage.removeItem('safeguard_active_alert');
     setPhase('idle'); setActiveAlertId(null);

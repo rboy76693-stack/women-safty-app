@@ -26,13 +26,14 @@ export function useSOSQueue(onFlushed) {
     console.log(`[SOS Queue] Back online — flushing ${queue.length} queued SOS(es)`);
 
     Promise.allSettled(
-      queue.map((payload) =>
-        fetch('/api/sos/trigger', {
+      queue.map((payload) => {
+        const base = import.meta.env.VITE_BACKEND_URL || '';
+        return fetch(`${base}/api/sos/trigger`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload),
-        }).then((r) => { if (!r.ok) throw new Error('HTTP ' + r.status); return r; })
-      )
+        }).then((r) => { if (!r.ok) throw new Error('HTTP ' + r.status); return r; });
+      })
     ).then((results) => {
       const sent   = results.filter((r) => r.status === 'fulfilled').length;
       const failed = results.filter((r) => r.status === 'rejected').length;

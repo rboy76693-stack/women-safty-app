@@ -9,8 +9,9 @@ export function SocketProvider({ userId, children }) {
   const [liveAlerts, setLiveAlerts] = useState([]);
 
   useEffect(() => {
-    // Connect via Vite proxy — socket.io proxied through port 3000 → 5000
-    const socket = io({ transports: ['websocket', 'polling'] });
+    // Connect to backend — use env var for deployed version, fallback to same origin for local
+    const backendUrl = import.meta.env.VITE_BACKEND_URL || window.location.origin;
+    const socket = io(backendUrl, { transports: ['websocket', 'polling'] });
     socketRef.current = socket;
 
     socket.on('connect', () => {

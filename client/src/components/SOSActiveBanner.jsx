@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { ShieldAlert, ShieldCheck } from 'lucide-react';
 import { useOnlineStatus } from '../hooks/useOnlineStatus';
+import { apiPost } from '../utils/api';
 
 export default function SOSActiveBanner() {
   const [alertId, setAlertId] = useState(() => localStorage.getItem('safeguard_active_alert'));
@@ -12,7 +13,7 @@ export default function SOSActiveBanner() {
   const markSafe = async () => {
     setResolving(true);
     if (online) {
-      try { await fetch(`/api/sos/resolve/${alertId}`, { method: 'POST' }); } catch { }
+      try { await apiPost(`/api/sos/resolve/${alertId}`, {}); } catch { }
     }
     localStorage.removeItem('safeguard_active_alert');
     setAlertId(null);
