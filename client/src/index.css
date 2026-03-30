@@ -1,0 +1,83 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+@import 'leaflet/dist/leaflet.css';
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0f0f13;
+  --surface: #1a1a24;
+  --surface2: #22222f;
+  --border: #2e2e3e;
+  --accent: #e8315a;
+  --accent-glow: rgba(232,49,90,0.35);
+  --accent-soft: rgba(232,49,90,0.12);
+  --safe: #22c55e;
+  --safe-glow: rgba(34,197,94,0.3);
+  --warn: #f59e0b;
+  --text: #f0f0f5;
+  --text-muted: #8888aa;
+  --radius: 16px;
+  --radius-sm: 10px;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Mobile sidebar hidden by default, shown via toggle */
+@media (max-width: 768px) {
+  .sidebar { display: none !important; }
+  .sidebar.open { display: flex !important; position: fixed; z-index: 100; height: 100vh; }
+}
+
+button { font-family: inherit; cursor: pointer; border: none; outline: none; }
+input  { font-family: inherit; outline: none; }
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--surface); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+@keyframes pulse-ring {
+  0%   { transform: scale(1);   opacity: 1; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+@keyframes ping {
+  0%   { transform: scale(1);   opacity: 0.8; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes slide-in {
+  from { opacity: 0; transform: translateX(-12px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Mobile responsive ─────────────────────────────────────────── */
+@media (max-width: 768px) {
+  /* Hide desktop sidebar */
+  .sidebar-desktop { display: none !important; }
+
+  /* Show mobile top bar and bottom nav */
+  [style*="mobileTopBar"],
+  [style*="bottomNav"] { display: flex !important; }
+}
+
+@media (min-width: 769px) {
+  /* Hide mobile top bar and bottom nav on desktop */
+  [style*="mobileTopBar"],
+  [style*="bottomNav"] { display: none !important; }
+}
+
+/* Make map card not span 2 cols on mobile */
+@media (max-width: 640px) {
+  [style*="gridColumn: 'span 2'"] { grid-column: span 1 !important; }
+}
