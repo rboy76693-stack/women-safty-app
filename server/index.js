@@ -7,9 +7,24 @@ const setupSocket = require('./socket');
 
 const app = express();
 const server = http.createServer(app);
-const io = new Server(server, { cors: { origin: '*' } });
+const io = new Server(server, {
+  cors: {
+    origin: [
+      'http://localhost:3000',
+      'https://safeguard-app-sigma.vercel.app',
+      /\.vercel\.app$/,
+    ],
+    methods: ['GET', 'POST'],
+  },
+});
 
-app.use(cors());
+app.use(cors({
+  origin: [
+    'http://localhost:3000',
+    'https://safeguard-app-sigma.vercel.app',
+    /\.vercel\.app$/,
+  ],
+}));
 app.use(express.json());
 app.set('io', io);
 
