@@ -9,8 +9,9 @@ export function SocketProvider({ userId, children }) {
   const [liveAlerts, setLiveAlerts] = useState([]);
 
   useEffect(() => {
-    // Connect to backend — use env var for deployed version, fallback to same origin for local
-    const backendUrl = import.meta.env.VITE_BACKEND_URL || window.location.origin;
+    // Connect to backend — use env var for deployed version, fallback to Render URL
+    const backendUrl = import.meta.env.VITE_BACKEND_URL 
+      || 'https://women-safty-app-wyoh.onrender.com';
     const socket = io(backendUrl, { transports: ['websocket', 'polling'] });
     socketRef.current = socket;
 
