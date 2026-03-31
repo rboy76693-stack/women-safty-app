@@ -114,12 +114,11 @@ export default function PanicButton({ userId, userName, contacts = [], onSOSTrig
     return () => clearInterval(timer.current);
   }, [phase]);
 
-  // SVG arc progress — goes from full circle down to 0
+  // SVG arc progress
   const radius  = 62;
   const circ    = 2 * Math.PI * radius;
-  const elapsed = COUNTDOWN - count; // how many seconds have passed
   const dashOffset = phase === 'countdown' || phase === 'firing'
-    ? circ * (count / COUNTDOWN)   // shrinks as count goes down
+    ? circ * (count / COUNTDOWN)
     : circ;
 
   const isCounting = phase === 'countdown' || phase === 'firing';
@@ -221,10 +220,7 @@ export default function PanicButton({ userId, userName, contacts = [], onSOSTrig
           <p style={s.activeTitle}>SOS Sent</p>
           <div style={s.activeActions}>
             {online
-              ? <>
-                  <div style={s.activeChip}>✉ Email sent to all contacts</div>
-                  <div style={s.activeChip}>💬 SMS sent to all contacts</div>
-                </>
+              ? <div style={s.activeChip}>✉ Email sent to all contacts</div>
               : <div style={{ ...s.activeChip, ...s.offlineChip }}>
                   <WifiOff size={11} /> Queued — will send when back online
                 </div>
@@ -377,12 +373,6 @@ const s = {
     background: 'rgba(245,158,11,0.1)', color: '#f59e0b',
     border: '1px solid rgba(245,158,11,0.25)',
     display: 'flex', alignItems: 'center', gap: 5,
-  },
-  resolveBtn: {
-    marginTop: 8, padding: '9px 22px', borderRadius: 10,
-    background: 'rgba(34,197,94,0.12)', color: '#22c55e',
-    fontSize: 13, fontWeight: 600,
-    border: '1px solid rgba(34,197,94,0.3)', cursor: 'pointer',
   },
   resetBtn: {
     marginTop: 8, padding: '9px 22px', borderRadius: 10,

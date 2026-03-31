@@ -14,10 +14,7 @@ import { useNotifications } from './hooks/useNotifications';
 import { useSocket } from './context/SocketContext';
 import './index.css';
 
-const DEFAULT_CONTACTS = [
-  { id: 1, name: 'Mom', phone: '+92-300-9876543', email: '', relation: 'Mother' },
-  { id: 2, name: 'Aisha Khan', phone: '+92-321-5554433', email: '', relation: 'Friend' },
-];
+const DEFAULT_CONTACTS = [];
 
 const NAV_ITEMS = [
   { id: 'dashboard', label: 'Home',     Icon: LayoutDashboard },
@@ -53,7 +50,7 @@ export default function App() {
 
   // Auto-flush queued SOS when internet returns
   useSOSQueue((count) => {
-    alert(`📡 Back online — ${count} queued SOS alert(s) sent to your contacts.`);
+    console.log(`Back online — ${count} queued SOS alert(s) sent.`);
   });
 
   // Show profile setup for first-time users

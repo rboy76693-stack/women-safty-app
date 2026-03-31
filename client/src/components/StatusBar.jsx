@@ -8,7 +8,12 @@ const STATUSES = [
 ];
 
 export default function StatusBar() {
-  const [status, setStatus] = useState('safe');
+  const [status, setStatus] = useState(() => localStorage.getItem('safeguard_status') || 'safe');
+
+  const updateStatus = (id) => {
+    setStatus(id);
+    localStorage.setItem('safeguard_status', id);
+  };
   const current = STATUSES.find((s) => s.id === status);
   const Icon = current.icon;
 
@@ -28,7 +33,7 @@ export default function StatusBar() {
               color: status === st.id ? st.color : '#8888aa',
               border: `1px solid ${status === st.id ? st.color + '55' : '#2e2e3e'}`,
             }}
-            onClick={() => setStatus(st.id)}
+            onClick={() => updateStatus(st.id)}
           >
             {st.label}
           </button>

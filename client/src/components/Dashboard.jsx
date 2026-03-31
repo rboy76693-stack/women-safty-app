@@ -72,10 +72,8 @@ const s = {
   cardAccent: {
     border: '1px solid rgba(232,49,90,0.3)',
     background: 'linear-gradient(145deg, #1a1a24, #1f1520)',
-    display: 'flex', alignItems: 'center', justifyContent: 'center',
-    width: '100%',
   },
-  mapCard: { gridColumn: 'span 2' },
+  mapCard: { gridColumn: 'span 1' },
   cardTitle: {
     fontSize: 13, fontWeight: 600, color: '#8888aa',
     textTransform: 'uppercase', letterSpacing: 1, marginBottom: 16,
