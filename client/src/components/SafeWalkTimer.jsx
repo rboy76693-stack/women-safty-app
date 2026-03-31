@@ -30,6 +30,9 @@ export default function SafeWalkTimer({ userId, contacts = [], onSOSTriggered })
       emergencyContacts: contacts.map((c) => ({ name: c.name, phone: c.phone, email: c.email })),
     };
 
+    // Send emails via EmailJS from browser
+    sendSOSToAll(contacts, 'SafeGuard User', lat, lng, 'SAFE_WALK_EXPIRED').catch(e => console.error('[EmailJS]', e));
+
     if (online) {
       try {
         const resp = await fetch('/api/sos/trigger', {
@@ -101,3 +104,5 @@ export default function SafeWalkTimer({ userId, contacts = [], onSOSTriggered })
     </div>
   );
 }
+
+

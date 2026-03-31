@@ -5,6 +5,7 @@ import { useShakeDetection } from '../hooks/useShakeDetection';
 import { queueSOS } from '../hooks/useSOSQueue';
 import { useSocket } from '../context/SocketContext';
 import { apiPost } from '../utils/api';
+import { sendSOSToAll } from '../utils/emailjs';
 
 const COUNTDOWN    = 3;
 const MIN_CONTACTS = 3;
@@ -47,6 +48,11 @@ export default function PanicButton({ userId, userName, contacts = [], onSOSTrig
           );
           lat = pos.coords.latitude; lng = pos.coords.longitude;
         } catch { console.warn('Location unavailable'); }
+
+        // Send emails via EmailJS (browser-side, no SMTP blocking)
+        sendSOSToAll(contacts, userName || 'SafeGuard User', lat, lng, 'SOS')
+          .then(n => console.log(`[EmailJS] ${n} emails sent`))
+          .catch(e => console.error('[EmailJS] Error:', e));
 
         const payload = {
           userId, lat, lng, incidentType: 'SOS',
